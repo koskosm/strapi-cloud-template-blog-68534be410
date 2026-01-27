@@ -76,11 +76,6 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
     },
-    "relatedCards": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::credit-card.credit-card"
-    },
     "relatedOffers": {
       "type": "relation",
       "relation": "manyToMany",

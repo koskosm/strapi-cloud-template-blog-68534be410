@@ -37,11 +37,6 @@
       "relation": "oneToMany",
       "target": "api::hero-carousel.hero-carousel"
     },
-    "featuredCards": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::credit-card.credit-card"
-    },
     "featuredOffers": {
       "type": "relation",
       "relation": "oneToMany",

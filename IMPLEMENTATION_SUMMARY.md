@@ -79,8 +79,8 @@ Set up public access to your content:
    - `findOne` (to get individual items)
 3. For the home-page single type, enable `find`
 
-### 4. Create Credit Card Content Type (Required)
-Some schemas reference `api::credit-card.credit-card` which doesn't exist yet. You'll need to create this content type to complete the relations. Here's a suggested structure:
+### 4. Create Credit Card Content Type (Optional)
+The credit-card relations have been temporarily removed to allow deployment. If you need to add credit card functionality later:
 
 ```bash
 # Create credit-card content type
@@ -88,12 +88,10 @@ mkdir -p src/api/credit-card/content-types/credit-card
 mkdir -p src/api/credit-card/{controllers,routes,services}
 ```
 
-Then create the schema and related files for credit cards with fields like:
-- name, description
-- card image
-- benefits, features
-- annual fee, rewards
-- relations to offers and blog posts
+Then create the schema with fields like:
+- name, description, card image
+- benefits, features, annual fee, rewards
+- Add back relations in blog-post, shop-offer, and home-page schemas
 
 ### 5. Build and Start Strapi
 After setting up everything:
@@ -125,20 +123,15 @@ GET  /api/blog-posts?locale=zh-HK
 
 ## 🔄 Relations Overview
 
-- **Home Page** → Hero Carousels, Credit Cards, Shop Offers, Blog Posts
+- **Home Page** → Hero Carousels, Shop Offers, Blog Posts
 - **Blog Post** → Blog Category (many-to-one)
 - **Blog Post** ↔ Blog Tags (many-to-many)
-- **Blog Post** ↔ Credit Cards (many-to-many) ⚠️ *Requires credit-card content type*
 - **Blog Post** ↔ Shop Offers (many-to-many)
-- **Shop Offer** ↔ Credit Cards (many-to-many) ⚠️ *Requires credit-card content type*
+- **Blog Post** → Author (users-permissions.user)
 
-## ⚠️ Important Notes
+## ✅ Deployment Ready
 
-### Missing Content Type
-The following relations won't work until you create the `credit-card` content type:
-- `blog-post.relatedCards`
-- `shop-offer.eligibleCards`
-- `home-page.featuredCards`
+All schemas are now deployment-ready! Credit card relations have been removed to prevent deployment failures. You can add the credit-card content type later if needed.
 
 ### Strapi v5 Compatibility
 All schemas are fully compatible with Strapi v5! The i18n plugin is built-in and doesn't require separate installation.

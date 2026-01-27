@@ -74,12 +74,6 @@
         }
       }
     },
-    "eligibleCards": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::credit-card.credit-card",
-      "inversedBy": "offers"
-    },
     "category": {
       "type": "enumeration",
       "enum": ["dining", "shopping", "travel", "entertainment", "lifestyle", "other"],
