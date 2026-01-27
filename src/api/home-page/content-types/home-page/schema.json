@@ -1,0 +1,100 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_page",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": "Home page configuration and featured content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "seoTitle": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "seoDescription": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "heroCarousels": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hero-carousel.hero-carousel"
+    },
+    "featuredCards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::credit-card.credit-card"
+    },
+    "featuredOffers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::shop-offer.shop-offer"
+    },
+    "featuredBlogPosts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::blog-post.blog-post"
+    },
+    "hotPicksTitle": {
+      "type": "string",
+      "default": "Our Hot Picks",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "hotPicksDescription": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "mostViewedTitle": {
+      "type": "string",
+      "default": "Most Viewed Cards",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "limitedOffersTitle": {
+      "type": "string",
+      "default": "Limited Shop Offers",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "latestPostsTitle": {
+      "type": "string",
+      "default": "Latest Posts",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}
