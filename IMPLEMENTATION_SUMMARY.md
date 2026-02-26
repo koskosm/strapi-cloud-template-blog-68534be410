@@ -7,44 +7,49 @@ All schemas from the `ppd-cms-schemas` folder have been successfully implemented
 ### Content Types Created
 
 #### Collection Types
-1. **Blog Category** (`blog-category`)
+1. **Merchant** (`merchant`) – *New*
+   - Location: `/src/api/merchant/`
+   - Localized: name, description
+   - Relations: One-to-many with shop offers (offers)
+
+2. **Blog Category** (`blog-category`)
    - Location: `/src/api/blog-category/`
    - Localized fields: name, description
    - Relations: One-to-many with blog posts
 
-2. **Blog Tag** (`blog-tag`)
+3. **Blog Tag** (`blog-tag`)
    - Location: `/src/api/blog-tag/`
    - Localized fields: name
    - Relations: Many-to-many with blog posts
 
-3. **Blog Post** (`blog-post`)
+4. **Blog Post** (`blog-post`)
    - Location: `/src/api/blog-post/`
    - Localized fields: title, excerpt, content, SEO fields
-   - Relations: Category, tags, author, credit cards, shop offers
+   - Relations: Category, tags, author, shop offers
    - Features: Draft & publish, featured flag, view count, reading time
 
-4. **Hero Carousel** (`hero-carousel`)
+5. **Hero Carousel** (`hero-carousel`)
    - Location: `/src/api/hero-carousel/`
    - Localized fields: title, subtitle, description, CTA text
    - Media: Desktop and mobile images
    - Features: Order, active status, start/end dates
 
-5. **Shop Offer** (`shop-offer`)
+6. **Shop Offer** (`shop-offer`) – *Updated* (merchant)
    - Location: `/src/api/shop-offer/`
    - Localized fields: name, discount, detail, description, terms
-   - Relations: Many-to-many with credit cards
+   - Relations: Merchant (many-to-one)
    - Features: Category enum, featured flag, active status, dates
 
-6. **Static Page** (`static-page`)
+7. **Static Page** (`static-page`)
    - Location: `/src/api/static-page/`
    - Localized fields: title, content, SEO fields
    - Features: Page type enum, footer visibility, order
 
 #### Single Type
-7. **Home Page** (`home-page`)
+8. **Home Page** (`home-page`)
    - Location: `/src/api/home-page/`
    - Localized fields: SEO fields, section titles
-   - Relations: Hero carousels, featured cards, offers, blog posts
+   - Relations: Hero carousels, offers, blog posts
 
 ## 📋 Next Steps
 
@@ -79,19 +84,8 @@ Set up public access to your content:
    - `findOne` (to get individual items)
 3. For the home-page single type, enable `find`
 
-### 4. Create Credit Card Content Type (Optional)
-The credit-card relations have been temporarily removed to allow deployment. If you need to add credit card functionality later:
-
-```bash
-# Create credit-card content type
-mkdir -p src/api/credit-card/content-types/credit-card
-mkdir -p src/api/credit-card/{controllers,routes,services}
-```
-
-Then create the schema with fields like:
-- name, description, card image
-- benefits, features, annual fee, rewards
-- Add back relations in blog-post, shop-offer, and home-page schemas
+### 4. Add Credit Card when ready (Optional)
+Credit card is **deliberately omitted** for now so deployment works without it. When you want to add it, follow **ADDING_CREDIT_CARD.md** to create the content type and restore relations on blog-post, shop-offer, and home-page.
 
 ### 5. Build and Start Strapi
 After setting up everything:
@@ -115,6 +109,7 @@ GET  /api/blog-posts?populate=*
 GET  /api/blog-categories?populate=*
 GET  /api/blog-tags?populate=*
 GET  /api/static-pages?populate=*
+GET  /api/merchants?populate=*
 
 # With Localization
 GET  /api/blog-posts?locale=en
@@ -124,14 +119,13 @@ GET  /api/blog-posts?locale=zh-HK
 ## 🔄 Relations Overview
 
 - **Home Page** → Hero Carousels, Shop Offers, Blog Posts
-- **Blog Post** → Blog Category (many-to-one)
-- **Blog Post** ↔ Blog Tags (many-to-many)
-- **Blog Post** ↔ Shop Offers (many-to-many)
-- **Blog Post** → Author (users-permissions.user)
+- **Merchant** → Shop Offers (one-to-many)
+- **Shop Offer** → Merchant (many-to-one)
+- **Blog Post** → Blog Category (many-to-one), ↔ Blog Tags (many-to-many), ↔ Shop Offers (many-to-many), → Author (users-permissions.user)
 
-## ✅ Deployment Ready
+## ✅ Credit card deliberately omitted
 
-All schemas are now deployment-ready! Credit card relations have been removed to prevent deployment failures. You can add the credit-card content type later if needed.
+Credit card content type and its relations (`relatedCards`, `eligibleCards`, `featuredCards`) are **not** in the codebase so deployment can succeed. When you want to add them, use **ADDING_CREDIT_CARD.md** for step-by-step instructions.
 
 ### Strapi v5 Compatibility
 All schemas are fully compatible with Strapi v5! The i18n plugin is built-in and doesn't require separate installation.

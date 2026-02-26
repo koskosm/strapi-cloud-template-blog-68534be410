@@ -1,10 +1,10 @@
 # Adding Credit Card Content Type
 
-This guide shows how to add the credit-card content type that was removed to fix deployment issues.
+Credit card is **deliberately omitted** from the codebase for now. This guide shows how to add the credit-card content type when you're ready.
 
-## Why Was It Removed?
+## Why Is It Omitted?
 
-The original schemas referenced `api::credit-card.credit-card` which didn't exist, causing deployment failures. The relations were removed to allow successful deployment.
+The schemas reference `api::credit-card.credit-card` in blog-post, shop-offer, and home-page. To keep deployment working without implementing credit card yet, the content type and those relations were left out. Use this guide to add them when you need credit card support.
 
 ## How to Add It Back
 

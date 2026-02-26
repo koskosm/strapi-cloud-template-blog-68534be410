@@ -74,6 +74,13 @@
         }
       }
     },
+    "merchant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::merchant.merchant",
+      "inversedBy": "offers",
+      "description": "Merchant associated with this offer"
+    },
     "eligibleCards": {
       "type": "relation",
       "relation": "manyToMany",

@@ -29,6 +29,10 @@ See `V5_UPDATED_SCHEMAS.md` for v5-specific details.
            │   └── content-types/
            │       └── hero-carousel/
            │           └── schema.json
+           ├── merchant/
+           │   └── content-types/
+           │       └── merchant/
+           │           └── schema.json
            ├── shop-offer/
            │   └── content-types/
            │       └── shop-offer/
@@ -87,6 +91,16 @@ See `V5_UPDATED_SCHEMAS.md` for v5-specific details.
   - Order, active status
   - Start/end dates
 
+#### Merchant (`merchant`)
+- **Purpose**: Merchants that can be associated with shop offers. Create or select a merchant when editing an offer.
+- **Localized**: Yes (name, description)
+- **Fields**:
+  - Name, slug (required)
+  - Logo (optional image)
+  - Website, description (optional)
+  - Offers (relation, one-to-many to Shop Offer)
+- **Note**: No draft/publish; merchants are published when saved.
+
 #### Shop Offer (`shop-offer`)
 - **Purpose**: Shopping offers and merchant promotions
 - **Localized**: Yes
@@ -94,6 +108,7 @@ See `V5_UPDATED_SCHEMAS.md` for v5-specific details.
   - Name, slug, logo
   - Discount, detail, description
   - Terms and conditions
+  - **Merchant** (relation, many-to-one) – select or create the merchant for this offer
   - Eligible cards (relation)
   - Category, dates
   - Featured & active status
@@ -140,8 +155,9 @@ Once set up, your Strapi API will expose:
 
 ```
 GET  /api/home-page?populate=*
+GET  /api/merchants
+GET  /api/shop-offers?populate=merchant
 GET  /api/hero-carousels
-GET  /api/shop-offers
 GET  /api/blog-posts
 GET  /api/blog-categories
 GET  /api/blog-tags
@@ -163,6 +179,8 @@ GET /api/blog-posts?locale=zh-HK
 - **Home Page** → Credit Cards (one-to-many, featured)
 - **Home Page** → Shop Offers (one-to-many, featured)
 - **Home Page** → Blog Posts (one-to-many, featured)
+- **Merchant** → Shop Offers (one-to-many) – one merchant can have many offers
+- **Shop Offer** → Merchant (many-to-one) – each offer can select one merchant
 - **Shop Offer** ↔ Credit Cards (many-to-many)
 - **Blog Post** → Blog Category (many-to-one)
 - **Blog Post** ↔ Blog Tags (many-to-many)
