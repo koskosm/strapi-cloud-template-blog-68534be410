@@ -86,6 +86,12 @@
       "enum": ["dining", "shopping", "travel", "entertainment", "lifestyle", "other"],
       "default": "other"
     },
+    "channel": {
+      "type": "enumeration",
+      "enum": ["online", "retail", "all"],
+      "default": "all",
+      "description": "Where the offer applies: online only, retail only, or both"
+    },
     "merchantWebsite": {
       "type": "string"
     },
