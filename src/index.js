@@ -10,8 +10,9 @@ module.exports = {
    */
   register({ strapi }) {
     strapi.customFields.register({
-      name: "credit-card-slugs",
-      type: "text",
+      name: 'credit-card-slugs',
+      plugin: 'global',
+      type: 'text',
       inputSize: {
         default: 12,
         isResizable: true,
