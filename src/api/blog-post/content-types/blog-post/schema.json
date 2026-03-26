@@ -112,10 +112,6 @@
     "publishedAt": {
       "type": "datetime"
     },
-    "isFeatured": {
-      "type": "boolean",
-      "default": false
-    },
     "viewCount": {
       "type": "integer",
       "default": 0

@@ -114,10 +114,6 @@
       "type": "date",
       "required": true
     },
-    "isFeatured": {
-      "type": "boolean",
-      "default": false
-    },
     "isActive": {
       "type": "boolean",
       "default": true
