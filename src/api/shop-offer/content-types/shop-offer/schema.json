@@ -81,6 +81,12 @@
       "inversedBy": "offers",
       "description": "Merchant associated with this offer"
     },
+    "relatedBlogPosts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog-post.blog-post",
+      "mappedBy": "relatedOffers"
+    },
     "category": {
       "type": "enumeration",
       "enum": ["dining", "shopping", "travel", "entertainment", "lifestyle", "other"],

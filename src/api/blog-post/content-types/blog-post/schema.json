@@ -76,10 +76,20 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
     },
+    "relatedCards": {
+      "type": "text",
+      "description": "Related cards — comma-separated credit card slugs",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "relatedOffers": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::shop-offer.shop-offer"
+      "target": "api::shop-offer.shop-offer",
+      "inversedBy": "relatedBlogPosts"
     },
     "seoTitle": {
       "type": "string",
