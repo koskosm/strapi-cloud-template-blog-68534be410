@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "welcome_offers",
+  "info": {
+    "singularName": "welcome-offer",
+    "pluralName": "welcome-offers",
+    "displayName": "Welcome Offer",
+    "description": "Welcome offers linked to a credit card slug"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "cardSlug": {
+      "type": "string",
+      "required": true,
+      "description": "Credit card slug this welcome offer applies to",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "offerDetails": {
+      "type": "richtext",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "offerUrl": {
+      "type": "string",
+      "description": "Link to the welcome offer",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    }
+  }
+}
