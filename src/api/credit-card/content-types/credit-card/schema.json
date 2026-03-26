@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "credit_cards",
+  "info": {
+    "singularName": "credit-card",
+    "pluralName": "credit-cards",
+    "displayName": "Credit Card",
+    "description": "Credit card slugs managed with external API autocomplete"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slugsCsv": {
+      "type": "text",
+      "customField": "global::credit-card-slugs",
+      "required": true,
+      "description": "Comma-separated credit card slugs, e.g. hsbc-red,scb-smart"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

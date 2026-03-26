@@ -8,7 +8,16 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: "credit-card-slugs",
+      type: "text",
+      inputSize: {
+        default: 12,
+        isResizable: true,
+      },
+    });
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

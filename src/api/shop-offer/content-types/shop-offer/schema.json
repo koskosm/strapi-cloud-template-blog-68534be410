@@ -102,8 +102,9 @@
       "type": "string"
     },
     "creditCardSlug": {
-      "type": "string",
-      "description": "Credit card slug (e.g. for display or linking)"
+      "type": "text",
+      "customField": "global::credit-card-slugs",
+      "description": "Comma-separated credit card slugs (with autocomplete)"
     },
     "startDate": {
       "type": "date",
