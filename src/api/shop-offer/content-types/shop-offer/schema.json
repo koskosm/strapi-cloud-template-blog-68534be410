@@ -102,7 +102,7 @@
       "type": "string"
     },
     "creditCardSlug": {
-      "type": "text",
+      "type": "customField",
       "customField": "global::credit-card-slugs",
       "description": "Comma-separated credit card slugs (with autocomplete)"
     },

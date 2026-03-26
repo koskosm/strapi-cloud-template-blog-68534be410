@@ -21,7 +21,7 @@
       "required": true
     },
     "slugsCsv": {
-      "type": "text",
+      "type": "customField",
       "customField": "global::credit-card-slugs",
       "required": true,
       "description": "Comma-separated credit card slugs, e.g. hsbc-red,scb-smart"
