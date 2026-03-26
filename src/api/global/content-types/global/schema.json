@@ -30,6 +30,12 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "facebookUrl": {
+      "type": "string"
+    },
+    "instagramUrl": {
+      "type": "string"
     }
   }
 }
