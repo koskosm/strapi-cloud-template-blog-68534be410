@@ -7,7 +7,6 @@ export default {
   register(app) {
     app.customFields.register({
       name: 'credit-card-slugs',
-      pluginId: 'global',
       type: 'text',
       intlLabel: {
         id: 'credit-card-slugs.label',
