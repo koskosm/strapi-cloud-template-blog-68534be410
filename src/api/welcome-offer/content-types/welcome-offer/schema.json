@@ -17,9 +17,10 @@
   },
   "attributes": {
     "cardSlug": {
-      "type": "string",
+      "type": "customField",
+      "customField": "global::credit-card-slugs",
       "required": true,
-      "description": "Credit card slug this welcome offer applies to",
+      "description": "Credit card slug(s) this welcome offer applies to",
       "pluginOptions": {
         "i18n": {
           "localized": false

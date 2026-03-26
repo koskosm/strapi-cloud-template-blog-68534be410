@@ -77,7 +77,8 @@
       "target": "plugin::users-permissions.user"
     },
     "relatedCards": {
-      "type": "text",
+      "type": "customField",
+      "customField": "global::credit-card-slugs",
       "description": "Related cards — comma-separated credit card slugs",
       "pluginOptions": {
         "i18n": {
