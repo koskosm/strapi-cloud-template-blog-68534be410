@@ -47,6 +47,24 @@
       "relation": "oneToMany",
       "target": "api::blog-post.blog-post"
     },
+    "featuredCardSlugs": {
+      "type": "json",
+      "description": "Credit card slugs for featured cards (JSON array of strings, e.g. [\"card-slug-a\", \"card-slug-b\"])",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "mostViewedCardSlugs": {
+      "type": "json",
+      "description": "Credit card slugs for most viewed cards (JSON array of strings)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "hotPicksTitle": {
       "type": "string",
       "default": "Our Hot Picks",
