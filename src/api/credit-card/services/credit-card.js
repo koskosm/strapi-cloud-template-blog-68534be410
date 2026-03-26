@@ -39,7 +39,7 @@ module.exports = createCoreService('api::credit-card.credit-card', ({ strapi }) 
       return [];
     }
 
-    const endpoint = `/api/v1/cards?q=${encodeURIComponent(trimmed)}`;
+    const endpoint = `/api/v1/cards?search=${encodeURIComponent(trimmed)}`;
     const payload = await this.fetchExternalJson(endpoint);
     const cards = Array.isArray(payload?.data) ? payload.data : [];
 
