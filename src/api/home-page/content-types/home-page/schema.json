@@ -48,8 +48,8 @@
       "target": "api::blog-post.blog-post"
     },
     "featuredCardSlugs": {
-      "type": "json",
-      "description": "Credit card slugs for featured cards (JSON array of strings, e.g. [\"card-slug-a\", \"card-slug-b\"])",
+      "type": "text",
+      "description": "Credit card slugs for featured cards (e.g. comma-separated: slug-a, slug-b)",
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -57,8 +57,8 @@
       }
     },
     "mostViewedCardSlugs": {
-      "type": "json",
-      "description": "Credit card slugs for most viewed cards (JSON array of strings)",
+      "type": "text",
+      "description": "Credit card slugs for most viewed cards (e.g. comma-separated: slug-a, slug-b)",
       "pluginOptions": {
         "i18n": {
           "localized": false
