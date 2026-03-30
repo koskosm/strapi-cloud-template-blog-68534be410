@@ -1,3 +1,39 @@
+diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
+index 5b0091f..8b7ddb9 100644
+--- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
++++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
+@@ -41,7 +41,6 @@ const {
+   Markdown,
+   MediaEmbed,
+   Paragraph,
+-  PasteFromOffice,
+   RemoveFormat,
+   SpecialCharacters,
+   SpecialCharactersEssentials,
+@@ -72,7 +71,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+       Link,
+       List,
+       Paragraph,
+-      PasteFromOffice,
+       Table,
+       TableToolbar,
+       TableColumnResize,
+@@ -154,7 +152,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+       List,
+       MediaEmbed,
+       Paragraph,
+-      PasteFromOffice,
+       Table,
+       TableToolbar,
+       TableColumnResize,
+@@ -255,7 +252,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+       TodoList,
+       MediaEmbed,
+       Paragraph,
+-      PasteFromOffice,
+       RemoveFormat,
+       SpecialCharacters,
+       SpecialCharactersEssentials,
 diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
 index b11c701..dfded18 100644
 --- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
