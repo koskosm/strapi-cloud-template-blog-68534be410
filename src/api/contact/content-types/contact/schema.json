@@ -17,7 +17,12 @@
   },
   "attributes": {
     "content": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
       "pluginOptions": {
         "i18n": {
           "localized": true

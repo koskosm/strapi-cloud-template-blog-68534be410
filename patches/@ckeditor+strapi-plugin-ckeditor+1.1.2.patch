@@ -1,0 +1,31 @@
+diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
+index b11c701..caa2899 100644
+--- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
++++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
+@@ -31,7 +31,9 @@ const CKEditorInput = ( props ) => {
+   const { onChange, value } = useField( name );
+   const [ editorInstance, setEditorInstance ] = useState(false);
+   const { formatMessage } = useIntl();
+-  const { maxLengthCharacters:maxLength, licenseKey, ...options } = attribute.options;
++  const { maxLengthCharacters:maxLength, licenseKey: licenseKeyFromOptions, ...options } = attribute.options || {};
++  const licenseKey =
++    licenseKeyFromOptions || import.meta.env.VITE_CKEDITOR_LICENSE_KEY || '';
+   const configurator = new Configurator( { options, maxLength, licenseKey } );
+   const editorConfig = configurator.getEditorConfig();
+ 
+diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx
+index e1fe8c2..ac82b4a 100644
+--- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx
++++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx
+@@ -167,10 +167,7 @@ export default {
+             id: 'ckeditor.preset.error.required',
+             defaultMessage: 'Editor preset is required',
+           } ),
+-          licenseKey: yup.string().required( {
+-            id: 'ckeditor.licenseKey.error.required',
+-            defaultMessage: 'Editor license key is required. Visit https://portal.ckeditor.com/checkout?plan=free to receive it.',
+-          } ),
++          licenseKey: yup.string(),
+         } ),
+       },
+     } );

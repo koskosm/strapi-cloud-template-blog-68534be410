@@ -28,7 +28,12 @@
       }
     },
     "offerDetails": {
-      "type": "richtext",
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
       "required": true,
       "pluginOptions": {
         "i18n": {
