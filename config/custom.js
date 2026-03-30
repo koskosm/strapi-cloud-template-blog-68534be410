@@ -1,4 +1,8 @@
 module.exports = ({ env }) => ({
+  ckeditorLicenseKey:
+    env("CKEDITOR_LICENSE_KEY") ||
+    env("STRAPI_ADMIN_CKEDITOR_LICENSE_KEY") ||
+    "",
   cardApi: {
     baseUrl: env(
       "CARD_API_BASE_URL",

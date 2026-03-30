@@ -10,5 +10,13 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: 'GET',
+      path: '/credit-cards/ckeditor-license',
+      handler: 'credit-card.ckeditorLicense',
+      config: {
+        auth: false,
+      },
+    },
   ],
 };

@@ -1,20 +1,101 @@
 diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
-index b11c701..71c0999 100644
+index b11c701..6b266e3 100644
 --- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
 +++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
-@@ -31,7 +31,11 @@ const CKEditorInput = ( props ) => {
+@@ -1,4 +1,4 @@
+-import React, { useRef, useState } from 'react';
++import React, { useRef, useState, useEffect, useMemo } from 'react';
+ import { useIntl } from 'react-intl';
+ import { Flex } from '@strapi/design-system';
+ import { Field } from '@strapi/design-system';
+@@ -31,9 +31,59 @@ const CKEditorInput = ( props ) => {
    const { onChange, value } = useField( name );
    const [ editorInstance, setEditorInstance ] = useState(false);
    const { formatMessage } = useIntl();
 -  const { maxLengthCharacters:maxLength, licenseKey, ...options } = attribute.options;
+-  const configurator = new Configurator( { options, maxLength, licenseKey } );
+-  const editorConfig = configurator.getEditorConfig();
 +  const { maxLengthCharacters:maxLength, licenseKey: licenseKeyFromOptions, ...options } = attribute.options || {};
-+  const licenseKey =
-+    licenseKeyFromOptions ||
-+    __STRAPI_CKEDITOR_LICENSE_KEY__ ||
-+    '';
-   const configurator = new Configurator( { options, maxLength, licenseKey } );
-   const editorConfig = configurator.getEditorConfig();
++
++  const [ resolvedLicenseKey, setResolvedLicenseKey ] = useState( null );
++
++  useEffect( () => {
++    let cancelled = false;
++
++    const resolve = async () => {
++      if ( licenseKeyFromOptions ) {
++        setResolvedLicenseKey( licenseKeyFromOptions );
++        return;
++      }
++      const inlined = __STRAPI_CKEDITOR_LICENSE_KEY__;
++      if ( inlined ) {
++        setResolvedLicenseKey( inlined );
++        return;
++      }
++      try {
++        const response = await fetch( '/api/credit-cards/ckeditor-license', {
++          method: 'GET',
++          credentials: 'include',
++        } );
++        const data = await response.json();
++        if ( !cancelled ) {
++          setResolvedLicenseKey( typeof data.licenseKey === 'string' ? data.licenseKey : '' );
++        }
++      } catch ( fetchError ) {
++        if ( !cancelled ) {
++          setResolvedLicenseKey( '' );
++        }
++      }
++    };
++
++    resolve();
++
++    return () => {
++      cancelled = true;
++    };
++  }, [ licenseKeyFromOptions ] );
++
++  const configurator = useMemo( () => {
++    if ( resolvedLicenseKey === null ) {
++      return null;
++    }
++    return new Configurator( { options, maxLength, licenseKey: resolvedLicenseKey } );
++  }, [ options, maxLength, resolvedLicenseKey ] );
++
++  const editorConfig = useMemo( () => {
++    if ( !configurator ) {
++      return null;
++    }
++    return configurator.getEditorConfig();
++  }, [ configurator ] );
  
+   const wordCounter = useRef( null );
+ 
+@@ -60,6 +110,24 @@ const CKEditorInput = ( props ) => {
+     handleToggleMediaLib();
+   };
+ 
++  if ( resolvedLicenseKey === null || !editorConfig ) {
++    return (
++      <Field.Root
++        name= {name }
++        id={ name }
++        error={ error }
++        hint={ description && formatMessage( description ) }
++      >
++        <Flex spacing={ 1 } alignItems="normal" style={ { 'flexDirection': 'column' } }>
++          <Field.Label action={ labelAction } required={ required }>
++            { intlLabel ? formatMessage( intlLabel ) : name }
++          </Field.Label>
++          <Field.Hint />
++        </Flex>
++      </Field.Root>
++    );
++  }
++
+   return (
+     <Field.Root
+       name= {name }
 diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx
 index e1fe8c2..ac82b4a 100644
 --- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/index.jsx
