@@ -1,15 +1,17 @@
 diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
-index b11c701..caa2899 100644
+index b11c701..71c0999 100644
 --- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
 +++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/index.jsx
-@@ -31,7 +31,9 @@ const CKEditorInput = ( props ) => {
+@@ -31,7 +31,11 @@ const CKEditorInput = ( props ) => {
    const { onChange, value } = useField( name );
    const [ editorInstance, setEditorInstance ] = useState(false);
    const { formatMessage } = useIntl();
 -  const { maxLengthCharacters:maxLength, licenseKey, ...options } = attribute.options;
 +  const { maxLengthCharacters:maxLength, licenseKey: licenseKeyFromOptions, ...options } = attribute.options || {};
 +  const licenseKey =
-+    licenseKeyFromOptions || import.meta.env.VITE_CKEDITOR_LICENSE_KEY || '';
++    licenseKeyFromOptions ||
++    __STRAPI_CKEDITOR_LICENSE_KEY__ ||
++    '';
    const configurator = new Configurator( { options, maxLength, licenseKey } );
    const editorConfig = configurator.getEditorConfig();
  
