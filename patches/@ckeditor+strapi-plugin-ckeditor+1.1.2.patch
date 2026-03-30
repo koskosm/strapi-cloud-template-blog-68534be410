@@ -1,5 +1,5 @@
 diff --git a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
-index 5b0091f..8b7ddb9 100644
+index 5b0091f..f91ffec 100644
 --- a/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
 +++ b/node_modules/@ckeditor/strapi-plugin-ckeditor/admin/src/components/CKEditorInput/Configurator.js
 @@ -41,7 +41,6 @@ const {
@@ -18,15 +18,42 @@ index 5b0091f..8b7ddb9 100644
        Table,
        TableToolbar,
        TableColumnResize,
-@@ -154,7 +152,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+@@ -154,7 +152,9 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
        List,
        MediaEmbed,
        Paragraph,
 -      PasteFromOffice,
++      FontColor,
++      FontBackgroundColor,
++      Highlight,
        Table,
        TableToolbar,
        TableColumnResize,
-@@ -255,7 +252,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+@@ -170,6 +170,8 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+         '|',
+         'bold', 'italic',
+         '|',
++        'fontColor', 'fontBackgroundColor', 'highlight',
++        '|',
+         'link', 'strapiMediaLib', 'mediaEmbed', 'blockQuote', 'insertTable', 'codeBlock',
+         '|',
+         'bulletedList', 'numberedList', 'outdent', 'indent'
+@@ -204,6 +206,14 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
+         'toggleTableCaption'
+       ]
+     },
++    fontColor: {
++      columns: 5,
++      documentColors: 10,
++    },
++    fontBackgroundColor: {
++      columns: 5,
++      documentColors: 10,
++    },
+     link: {
+       decorators: {
+         openInNewTab: {
+@@ -255,7 +265,6 @@ const CKEDITOR_BASE_CONFIG_FOR_PRESETS = {
        TodoList,
        MediaEmbed,
        Paragraph,
