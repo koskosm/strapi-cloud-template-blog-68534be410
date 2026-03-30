@@ -7,8 +7,9 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'script-src': ['https://cdn.ckeditor.com'],
-          'connect-src': ['https://proxy-event.ckeditor.com'],
+          // Keep 'self' so the admin bundle can load; append CKEditor CDN (see CKEditor Strapi plugin README).
+          'script-src': ["'self'", 'https://cdn.ckeditor.com'],
+          'connect-src': ["'self'", 'https://proxy-event.ckeditor.com'],
         },
       },
     },
