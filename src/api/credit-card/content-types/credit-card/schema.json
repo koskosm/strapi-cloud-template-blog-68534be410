@@ -12,22 +12,179 @@
   },
   "pluginOptions": {
     "i18n": {
-      "localized": false
+      "localized": true
     }
   },
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "slugsCsv": {
       "type": "customField",
       "customField": "global::credit-card-slugs",
       "required": true,
-      "description": "Comma-separated credit card slugs, e.g. hsbc-red,scb-smart"
+      "description": "Comma-separated credit card slugs, e.g. hsbc-red,scb-smart",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "description": "General description for this credit card",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "cardFaceImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Card face image",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "benefits": {
+      "type": "text",
+      "description": "Benefits (free text)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "annualFee": {
+      "type": "text",
+      "description": "年費 / Annual Fee",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "student": {
+      "type": "text",
+      "description": "學生 / Student",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "minimumIncomeRequirement": {
+      "type": "text",
+      "description": "最低入息要求 / Minimum Income Requirement",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "issuingBank": {
+      "type": "text",
+      "description": "發卡行 / Issuing Bank",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "issuingInstitution": {
+      "type": "text",
+      "description": "發卡機構 / Issuing Institution",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "mobilePayment": {
+      "type": "text",
+      "description": "手機付款 / Mobile Payment",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "annualInterestRateAndFees": {
+      "type": "text",
+      "description": "年利率及費用 / Annual Interest Rate & Fees",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "topMetricsLabel1": {
+      "type": "string",
+      "description": "Top metrics label 1",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "topMetricsLabel2": {
+      "type": "string",
+      "description": "Top metrics label 2",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "topMetricsLabel3": {
+      "type": "string",
+      "description": "Top metrics label 3",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "keyMetrics": {
+      "type": "component",
+      "repeatable": true,
+      "component": "credit-card.key-metric",
+      "min": 4,
+      "max": 4,
+      "description": "Four key metrics: icon, main text, and label each"
+    },
+    "offerDetails": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "offerUrl": {
+      "type": "string",
+      "description": "Link to the welcome offer",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }
