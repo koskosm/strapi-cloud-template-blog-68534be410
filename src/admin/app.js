@@ -17,10 +17,7 @@ export default {
         defaultMessage: 'Comma-separated slugs with autocomplete per token.',
       },
       components: {
-        Input: async () =>
-          import('./components/CreditCardSlugsInput').then((module) => ({
-            default: module.default,
-          })),
+        Input: () => import('./components/CreditCardSlugsInput'),
       },
     });
   },
