@@ -57,54 +57,54 @@
         }
       }
     },
-    "topMetricsLabel1": {
+    "topMetrics1Label": {
       "type": "string",
-      "description": "Top metrics label 1",
+      "description": "Top metrics slot 1 — label",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "topMetricsValue1": {
+    "topMetrics1Value": {
       "type": "string",
-      "description": "Top metrics value 1",
+      "description": "Top metrics slot 1 — value",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "topMetricsLabel2": {
+    "topMetrics2Label": {
       "type": "string",
-      "description": "Top metrics label 2",
+      "description": "Top metrics slot 2 — label",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "topMetricsValue2": {
+    "topMetrics2Value": {
       "type": "string",
-      "description": "Top metrics value 2",
+      "description": "Top metrics slot 2 — value",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "topMetricsLabel3": {
+    "topMetrics3Label": {
       "type": "string",
-      "description": "Top metrics label 3",
+      "description": "Top metrics slot 3 — label",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "topMetricsValue3": {
+    "topMetrics3Value": {
       "type": "string",
-      "description": "Top metrics value 3",
+      "description": "Top metrics slot 3 — value",
       "pluginOptions": {
         "i18n": {
           "localized": true

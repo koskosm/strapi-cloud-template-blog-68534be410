@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ads",
+  "info": {
+    "singularName": "ad",
+    "pluralName": "ads",
+    "displayName": "Ads",
+    "description": "Ad placements: card slug, filters, search tags, and list positions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Internal name for this ad row",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "cardSlug": {
+      "type": "customField",
+      "customField": "global::credit-card-slugs",
+      "description": "Credit card slug (autocomplete; comma-separated if multiple)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "filterParameters": {
+      "type": "json",
+      "description": "Structured filter parameters (e.g. query keys or filter object for your app)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "searchTags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ads.search-tag",
+      "min": 0,
+      "description": "Search words with global vs specific match"
+    },
+    "cardListPositionTop": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show in top of card list",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "cardListPositionMiddle": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show in middle of card list",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "cardListPositionBottom": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show in bottom of card list",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_ads_search_tags",
+  "info": {
+    "displayName": "Search tag",
+    "description": "Search word with global (anywhere) vs specific (narrow) match"
+  },
+  "options": {},
+  "attributes": {
+    "searchWord": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "matchType": {
+      "type": "enumeration",
+      "enum": ["global", "specific"],
+      "default": "specific",
+      "required": true,
+      "description": "Global: broad match; specific: targeted search phrase match"
+    }
+  }
+}
