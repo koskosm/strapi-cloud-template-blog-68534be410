@@ -9,4 +9,77 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
     const results = await service.searchExternalCards(query);
     ctx.body = { data: results };
   },
+
+  /**
+   * GET /api/credit-cards/bulk?slugs=slug-a,slug-b&locale=zh-HK
+   *
+   * Returns CMS data for all matching credit card entries in one query.
+   * `slugsCsv` is a plain text CSV field, so we fetch all entries for the locale
+   * and filter server-side to avoid N+1 per-slug queries.
+   *
+   * Response: { data: [{ slugsCsv, name, cardFaceImage, ... }] }
+   */
+  async bulkByCsv(ctx) {
+    const rawSlugs = String(ctx.query.slugs || '').trim();
+    const locale = String(ctx.query.locale || 'en').trim();
+
+    if (!rawSlugs) {
+      ctx.body = { data: [] };
+      return;
+    }
+
+    const requestedSlugs = rawSlugs
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (requestedSlugs.length === 0) {
+      ctx.body = { data: [] };
+      return;
+    }
+
+    // Fetch all published credit card entries for the requested locale.
+    // We filter server-side because slugsCsv is a plain text field (not a relation),
+    // so Strapi's built-in $in filter cannot be used.
+    const localeToTry = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+      (l, i, arr) => arr.indexOf(l) === i,
+    );
+
+    let entries = [];
+    for (const loc of localeToTry) {
+      try {
+        const params = {
+          populate: '*',
+          pagination: { pageSize: 500, page: 1 },
+          filters: { publishedAt: { $notNull: true } },
+        };
+        if (loc) {
+          params.locale = loc;
+        }
+        const result = await strapi.entityService.findMany('api::credit-card.credit-card', params);
+        if (Array.isArray(result) && result.length > 0) {
+          entries = result;
+          break;
+        }
+      } catch (_err) {
+        // Try next locale
+      }
+    }
+
+    // Filter entries whose slugsCsv contains any of the requested slugs.
+    // Each CMS entry may cover multiple slugs (comma-separated).
+    const slugSet = new Set(requestedSlugs);
+
+    const matched = entries.filter((entry) => {
+      const csv = String(entry.slugsCsv || '').trim();
+      if (!csv) return false;
+      const entrySlugs = csv
+        .split(',')
+        .map((s) => s.trim().toLowerCase())
+        .filter(Boolean);
+      return entrySlugs.some((s) => slugSet.has(s));
+    });
+
+    ctx.body = { data: matched };
+  },
 }));

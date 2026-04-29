@@ -1,53 +1,203 @@
-import type { Struct, Schema } from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SharedSlider extends Struct.ComponentSchema {
-  collectionName: 'components_shared_sliders';
+export interface AdsSearchTag extends Struct.ComponentSchema {
+  collectionName: 'components_ads_search_tags';
   info: {
-    displayName: 'Slider';
-    icon: 'address-book';
-    description: '';
+    description: 'Search word with global (anywhere) vs specific (narrow) match';
+    displayName: 'Search tag';
   };
   attributes: {
-    files: Schema.Attribute.Media<'images', true>;
+    matchType: Schema.Attribute.Enumeration<['global', 'specific']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'specific'>;
+    searchWord: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 
-export interface SharedSeo extends Struct.ComponentSchema {
-  collectionName: 'components_shared_seos';
+export interface CreditCardKeyMetric extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_key_metrics';
   info: {
-    name: 'Seo';
-    icon: 'allergies';
-    displayName: 'Seo';
-    description: '';
+    description: 'Icon, main text, and label for one key metric (use four rows on the card)';
+    displayName: 'Key metric';
   };
   attributes: {
-    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
-    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
-    shareImage: Schema.Attribute.Media<'images'>;
+    icon: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    label: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    mainText: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 
-export interface SharedRichText extends Struct.ComponentSchema {
-  collectionName: 'components_shared_rich_texts';
+export interface CreditCardStaticContents extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_static_contents';
   info: {
-    displayName: 'Rich text';
-    icon: 'align-justify';
-    description: '';
+    description: 'Long-form rich text: benefits, fees, eligibility, issuer, and payment details';
+    displayName: 'Static contents';
   };
   attributes: {
-    body: Schema.Attribute.RichText;
-  };
-}
-
-export interface SharedQuote extends Struct.ComponentSchema {
-  collectionName: 'components_shared_quotes';
-  info: {
-    displayName: 'Quote';
-    icon: 'indent';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    body: Schema.Attribute.Text;
+    annualFee: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    annualInterestRateAndFees: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    aumAndSegmentRequirement: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    benefitsDetails: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    cardAssociation: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    issuerBank: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    minimumIncomeRequirements: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    mobilePayment: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    studentEligibility: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    supplementaryCard: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    welcomeOfferConditions: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 
@@ -62,14 +212,75 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedQuote extends Struct.ComponentSchema {
+  collectionName: 'components_shared_quotes';
+  info: {
+    displayName: 'Quote';
+    icon: 'indent';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedRichText extends Struct.ComponentSchema {
+  collectionName: 'components_shared_rich_texts';
+  info: {
+    description: '';
+    displayName: 'Rich text';
+    icon: 'align-justify';
+  };
+  attributes: {
+    body: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      >;
+  };
+}
+
+export interface SharedSeo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_seos';
+  info: {
+    description: '';
+    displayName: 'Seo';
+    icon: 'allergies';
+    name: 'Seo';
+  };
+  attributes: {
+    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    shareImage: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface SharedSlider extends Struct.ComponentSchema {
+  collectionName: 'components_shared_sliders';
+  info: {
+    description: '';
+    displayName: 'Slider';
+    icon: 'address-book';
+  };
+  attributes: {
+    files: Schema.Attribute.Media<'images', true>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'shared.slider': SharedSlider;
-      'shared.seo': SharedSeo;
-      'shared.rich-text': SharedRichText;
-      'shared.quote': SharedQuote;
+      'ads.search-tag': AdsSearchTag;
+      'credit-card.key-metric': CreditCardKeyMetric;
+      'credit-card.static-contents': CreditCardStaticContents;
       'shared.media': SharedMedia;
+      'shared.quote': SharedQuote;
+      'shared.rich-text': SharedRichText;
+      'shared.seo': SharedSeo;
+      'shared.slider': SharedSlider;
     }
   }
 }
