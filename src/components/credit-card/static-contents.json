@@ -1,0 +1,164 @@
+{
+  "collectionName": "components_credit_card_static_contents",
+  "info": {
+    "displayName": "Static contents",
+    "description": "Long-form rich text: benefits, fees, eligibility, issuer, and payment details"
+  },
+  "options": {},
+  "attributes": {
+    "benefitsDetails": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Benefits Details",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "welcomeOfferConditions": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Welcome Offer Conditions",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "annualFee": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Annual Fee",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "studentEligibility": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Student Eligibility",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "minimumIncomeRequirements": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Minimum Income Requirements",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "supplementaryCard": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Supplementary Card",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "aumAndSegmentRequirement": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "AUM and Segment Requirement",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "cardAssociation": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Card Association",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "issuerBank": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Issuer Bank",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "mobilePayment": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Mobile Payment",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "annualInterestRateAndFees": {
+      "type": "customField",
+      "customField": "plugin::ckeditor.CKEditor",
+      "description": "Annual Interest Rate and Fees",
+      "options": {
+        "preset": "standard",
+        "output": "HTML"
+      },
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}
