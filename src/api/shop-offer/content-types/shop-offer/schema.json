@@ -97,10 +97,12 @@
       "target": "api::blog-post.blog-post",
       "mappedBy": "relatedOffers"
     },
-    "category": {
-      "type": "enumeration",
-      "enum": ["dining", "shopping", "travel", "entertainment", "lifestyle", "other"],
-      "default": "other"
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::shop-offer-category.shop-offer-category",
+      "inversedBy": "offers",
+      "description": "Multiple categories; add new Shop Offer Category entries to extend the list"
     },
     "channel": {
       "type": "enumeration",

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shop_offer_categories",
+  "info": {
+    "singularName": "shop-offer-category",
+    "pluralName": "shop-offer-categories",
+    "displayName": "Shop Offer Category",
+    "description": "Labels for shop offers; create entries here to extend the pick list"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "offers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::shop-offer.shop-offer",
+      "mappedBy": "categories"
+    }
+  }
+}
