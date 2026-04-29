@@ -60,10 +60,9 @@
     },
     "description": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -73,10 +72,9 @@
     },
     "termsAndConditions": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {

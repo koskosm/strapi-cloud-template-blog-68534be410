@@ -1,5 +1,5 @@
 module.exports = () => ({
-  ckeditor: {
+  ckeditor5: {
     enabled: true,
   },
   'strapi-content-mcp': {

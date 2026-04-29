@@ -8,11 +8,10 @@
   "attributes": {
     "benefitsDetails": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Benefits Details",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -22,11 +21,10 @@
     },
     "welcomeOfferConditions": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Welcome Offer Conditions",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -36,11 +34,10 @@
     },
     "annualFee": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Annual Fee",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -50,11 +47,10 @@
     },
     "studentEligibility": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Student Eligibility",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -64,11 +60,10 @@
     },
     "minimumIncomeRequirements": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Minimum Income Requirements",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -78,11 +73,10 @@
     },
     "supplementaryCard": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Supplementary Card",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -92,11 +86,10 @@
     },
     "aumAndSegmentRequirement": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "AUM and Segment Requirement",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -106,11 +99,10 @@
     },
     "cardAssociation": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Card Association",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -120,11 +112,10 @@
     },
     "issuerBank": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Issuer Bank",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -134,11 +125,10 @@
     },
     "mobilePayment": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Mobile Payment",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {
@@ -148,11 +138,10 @@
     },
     "annualInterestRateAndFees": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "description": "Annual Interest Rate and Fees",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "pluginOptions": {
         "i18n": {

@@ -32,10 +32,9 @@
     },
     "content": {
       "type": "customField",
-      "customField": "plugin::ckeditor.CKEditor",
+      "customField": "plugin::ckeditor5.CKEditor",
       "options": {
-        "preset": "standard",
-        "output": "HTML"
+        "preset": "defaultHtml"
       },
       "required": true,
       "pluginOptions": {

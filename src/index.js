@@ -17,24 +17,6 @@ module.exports = {
         isResizable: true,
       },
     });
-
-    // Serve CKEditor license before the content API router so Users & Permissions
-    // scope checks cannot return 403 (Strapi Cloud / custom routes).
-    const apiPrefix = strapi.config.get('api.rest.prefix', '/api');
-    const ckeditorLicensePath = `${apiPrefix}/credit-cards/ckeditor-license`;
-    strapi.server.use(async (ctx, next) => {
-      if (ctx.method !== 'GET' || ctx.path !== ckeditorLicensePath) {
-        return next();
-      }
-      const licenseKey =
-        strapi.config.get('custom.ckeditorLicenseKey') ||
-        process.env.CKEDITOR_LICENSE_KEY ||
-        process.env.STRAPI_ADMIN_CKEDITOR_LICENSE_KEY ||
-        '';
-      ctx.set('Cache-Control', 'no-store');
-      ctx.type = 'application/json';
-      ctx.body = { licenseKey };
-    });
   },
 
   /**
