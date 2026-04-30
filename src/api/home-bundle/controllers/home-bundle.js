@@ -83,7 +83,8 @@ module.exports = {
     const allNeededSlugs = [...new Set([...featuredCardSlugs, ...mostViewedCardSlugs])];
 
     // ── 2. Bulk-fetch credit card CMS entries for the needed slugs ──────────
-    // Use documents() API (Strapi 5) — entityService.findMany() with locale is broken in Strapi 5
+    // Use db.query() — documents() and entityService both silently return 0 for localized
+    // collection types in this Strapi 5 version; db.query() hits the DB directly.
     let cardCmsEntries = [];
     if (allNeededSlugs.length > 0) {
       const cardLocaleOrder = [locale, 'en', 'zh-HK', undefined].filter(
@@ -91,14 +92,14 @@ module.exports = {
       );
       for (const loc of cardLocaleOrder) {
         try {
-          const opts = {
-            populate: ['cardFaceImage', 'keyMetrics'],
-            status: 'published',
+          const where = { publishedAt: { $notNull: true } };
+          if (loc) where.locale = loc;
+          const result = await strapi.db.query('api::credit-card.credit-card').findMany({
+            where,
+            populate: { cardFaceImage: true, keyMetrics: true },
             limit: 500,
-            start: 0,
-            ...(loc ? { locale: loc } : {}),
-          };
-          const result = await strapi.documents('api::credit-card.credit-card').findMany(opts);
+            offset: 0,
+          });
           if (Array.isArray(result) && result.length > 0) {
             cardCmsEntries = result;
             break;

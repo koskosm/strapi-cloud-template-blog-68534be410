@@ -18,21 +18,21 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
     const locale = String(ctx.query.locale || 'en').trim();
 
     // 1. Fetch all active shop offers with merchant/logo populate
-    // Use documents() API (Strapi 5) — entityService.findMany() with locale is broken in Strapi 5
-    const offerQueryOpts = {
-      populate: ['logo', 'merchant', 'merchant.logo', 'eligibleCards', 'categories'],
-      status: 'published',
-      filters: { isActive: { $ne: false } },
-      limit: 500,
-      start: 0,
-    };
-
-    let offers = [];
+    // Use db.query() — documents() and entityService both silently return 0 for localized
+    // collection types in this Strapi 5 version; db.query() hits the DB directly.
     const localeOrderOffers = [locale, 'en', undefined].filter((l, i, arr) => arr.indexOf(l) === i);
+    let offers = [];
     for (const loc of localeOrderOffers) {
       try {
-        const opts = { ...offerQueryOpts, ...(loc ? { locale: loc } : {}) };
-        const result = await strapi.documents('api::shop-offer.shop-offer').findMany(opts);
+        const where = { publishedAt: { $notNull: true }, isActive: { $ne: false } };
+        if (loc) where.locale = loc;
+        const result = await strapi.db.query('api::shop-offer.shop-offer').findMany({
+          where,
+          populate: { logo: true, merchant: { populate: { logo: true } }, eligibleCards: true, categories: true },
+          orderBy: { publishedAt: 'desc' },
+          limit: 500,
+          offset: 0,
+        });
         if (Array.isArray(result) && result.length > 0) {
           offers = result;
           break;
@@ -64,14 +64,14 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
       let cardEntries = [];
       for (const loc of localeOrder) {
         try {
-          const opts = {
-            populate: ['cardFaceImage'],
-            status: 'published',
+          const where = { publishedAt: { $notNull: true } };
+          if (loc) where.locale = loc;
+          const result = await strapi.db.query('api::credit-card.credit-card').findMany({
+            where,
+            populate: { cardFaceImage: true },
             limit: 500,
-            start: 0,
-            ...(loc ? { locale: loc } : {}),
-          };
-          const result = await strapi.documents('api::credit-card.credit-card').findMany(opts);
+            offset: 0,
+          });
           if (Array.isArray(result) && result.length > 0) {
             cardEntries = result;
             break;
