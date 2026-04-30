@@ -684,10 +684,9 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
     content: Schema.Attribute.RichText &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -855,10 +854,9 @@ export interface ApiContactContact extends Struct.SingleTypeSchema {
   attributes: {
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -953,10 +951,9 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       }>;
     offerDetails: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -1385,10 +1382,9 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
       Schema.Attribute.CustomField<'global::credit-card-slugs'>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -1441,10 +1437,9 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
     termsAndConditions: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -1479,10 +1474,9 @@ export interface ApiStaticPageStaticPage extends Struct.CollectionTypeSchema {
     content: Schema.Attribute.RichText &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{

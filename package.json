@@ -35,5 +35,8 @@
   },
   "overrides": {
     "@strapi/admin": "5.32.0"
+  },
+  "optionalDependencies": {
+    "@esbuild/darwin-arm64": "^0.28.0"
   }
 }

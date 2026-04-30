@@ -57,10 +57,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
   attributes: {
     annualFee: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -70,10 +69,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     annualInterestRateAndFees: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -83,10 +81,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     aumAndSegmentRequirement: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -96,10 +93,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     benefitsDetails: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -109,10 +105,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     cardAssociation: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -122,10 +117,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     issuerBank: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -135,10 +129,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     minimumIncomeRequirements: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -148,10 +141,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     mobilePayment: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -161,10 +153,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     studentEligibility: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -174,10 +165,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     supplementaryCard: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -187,10 +177,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     welcomeOfferConditions: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -234,10 +223,9 @@ export interface SharedRichText extends Struct.ComponentSchema {
   attributes: {
     body: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       >;
   };
