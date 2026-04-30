@@ -18,28 +18,27 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
     const locale = String(ctx.query.locale || 'en').trim();
 
     // 1. Fetch all active shop offers with merchant/logo populate
-    const offerParams = {
-      populate: ['logo', 'merchant', 'merchant.logo', 'eligibleCards'],
-      pagination: { pageSize: 500, page: 1 },
-      filters: { isActive: { $ne: false }, publishedAt: { $notNull: true } },
+    // Use documents() API (Strapi 5) — entityService.findMany() with locale is broken in Strapi 5
+    const offerQueryOpts = {
+      populate: ['logo', 'merchant', 'merchant.logo', 'eligibleCards', 'categories'],
+      status: 'published',
+      filters: { isActive: { $ne: false } },
+      limit: 500,
+      start: 0,
     };
-    if (locale) {
-      offerParams.locale = locale;
-    }
 
     let offers = [];
-    try {
-      offers = await strapi.entityService.findMany('api::shop-offer.shop-offer', offerParams);
-    } catch (_err) {
-      // Locale may not exist — fall back to default
+    const localeOrderOffers = [locale, 'en', undefined].filter((l, i, arr) => arr.indexOf(l) === i);
+    for (const loc of localeOrderOffers) {
       try {
-        const fallbackParams = { ...offerParams };
-        delete fallbackParams.locale;
-        offers = await strapi.entityService.findMany('api::shop-offer.shop-offer', fallbackParams);
-      } catch (fallbackErr) {
-        strapi.log.warn('[shop-offer] withCardPreviews: failed to fetch offers', fallbackErr);
-        ctx.body = { data: [] };
-        return;
+        const opts = { ...offerQueryOpts, ...(loc ? { locale: loc } : {}) };
+        const result = await strapi.documents('api::shop-offer.shop-offer').findMany(opts);
+        if (Array.isArray(result) && result.length > 0) {
+          offers = result;
+          break;
+        }
+      } catch (_err) {
+        // Try next locale
       }
     }
 
@@ -58,20 +57,21 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
     // 3. Fetch all credit card CMS entries and build a slug → preview map
     const cardPreviewMap = new Map();
     if (offerSlugsSet.size > 0) {
-      const localeOrder = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+      const localeOrder = [locale, 'en', 'zh-HK', undefined].filter(
         (l, i, arr) => arr.indexOf(l) === i,
       );
 
       let cardEntries = [];
       for (const loc of localeOrder) {
         try {
-          const cardParams = {
+          const opts = {
             populate: ['cardFaceImage'],
-            pagination: { pageSize: 500, page: 1 },
-            filters: { publishedAt: { $notNull: true } },
+            status: 'published',
+            limit: 500,
+            start: 0,
+            ...(loc ? { locale: loc } : {}),
           };
-          if (loc) cardParams.locale = loc;
-          const result = await strapi.entityService.findMany('api::credit-card.credit-card', cardParams);
+          const result = await strapi.documents('api::credit-card.credit-card').findMany(opts);
           if (Array.isArray(result) && result.length > 0) {
             cardEntries = result;
             break;

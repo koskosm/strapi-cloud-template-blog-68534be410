@@ -41,22 +41,22 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
     // Fetch all published credit card entries for the requested locale.
     // We filter server-side because slugsCsv is a plain text field (not a relation),
     // so Strapi's built-in $in filter cannot be used.
-    const localeToTry = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+    // Use documents() API (Strapi 5) — entityService.findMany() with locale is broken in Strapi 5
+    const localeToTry = [locale, 'en', 'zh-HK', undefined].filter(
       (l, i, arr) => arr.indexOf(l) === i,
     );
 
     let entries = [];
     for (const loc of localeToTry) {
       try {
-        const params = {
-          populate: '*',
-          pagination: { pageSize: 500, page: 1 },
-          filters: { publishedAt: { $notNull: true } },
+        const opts = {
+          populate: ['cardFaceImage', 'keyMetrics', 'staticContents'],
+          status: 'published',
+          limit: 500,
+          start: 0,
+          ...(loc ? { locale: loc } : {}),
         };
-        if (loc) {
-          params.locale = loc;
-        }
-        const result = await strapi.entityService.findMany('api::credit-card.credit-card', params);
+        const result = await strapi.documents('api::credit-card.credit-card').findMany(opts);
         if (Array.isArray(result) && result.length > 0) {
           entries = result;
           break;
