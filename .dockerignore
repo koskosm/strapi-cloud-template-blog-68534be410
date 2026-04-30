@@ -1,0 +1,10 @@
+.tmp/
+.cache/
+.git/
+node_modules/
+build/
+data/uploads/
+*.log
+*.sqlite
+*.sqlite3
+.env
