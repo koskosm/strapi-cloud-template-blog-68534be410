@@ -145,11 +145,34 @@ Site-wide settings: site name, favicon URL, default SEO metadata, social links.
 
 **Content Type:** `HomePage` (Single type)
 
-Configures which credit card slugs appear in the "Featured" and "Most Viewed" sections on the homepage.
+Configures which credit card slugs appear in the "Featured" section on the homepage. (Note: the `mostViewedCardSlugs` field still exists on this singleton but is no longer consumed by the public site as of PPD-89; the Most Viewed section is now driven by the Card Stats analytics endpoint.)
 
 ---
 
-## 13. Contact Page
+## 13. Card Stats (Analytics)
+
+**Content Type:** `CardStatDaily` (Collection, hidden from admin nav, no i18n)
+
+Internal analytics store powering the homepage's Most Viewed section and the search bar's Popular panel.
+
+**Fields:**
+- `date` — day bucket (`YYYY-MM-DD`)
+- `slug` — credit card slug (locale-agnostic)
+- `type` — `detail_view` | `search_top`
+- `count` — integer
+
+Composite unique index on `(type, date, slug)`; secondary index on `(type, date)`.
+
+**Custom public endpoints (no auth):**
+- `POST /api/card-stats/detail-view` — body `{ slug, sessionId }`. Records a card detail page view; capped at 5 per `(sessionId, slug, day)`.
+- `POST /api/card-stats/search-top` — body `{ slug, sessionId }`. Records a "search top result" event (fired by the frontend only when the user submits a non-empty keyword).
+- `GET /api/card-stats/top?type=<detail_view|search_top>&days=7&limit=<n>` — returns the top `<n>` slugs by summed count over the last `<days>` days, ordered desc. Returns `[]` when no data. Opportunistically deletes rows older than 30 days before computing the rollup (no cron / scheduler).
+
+Per-IP rate limit on the write endpoints: max 5 requests/min per IP.
+
+---
+
+## 14. Contact Page
 
 **Content Type:** `Contact` (Single type, i18n)
 
@@ -161,4 +184,5 @@ Fields: CKEditor content block, `email`, `phone`, `officeHours`.
 
 | Date | Change |
 |------|--------|
+| 2026-04-30 | PPD-89: Add `CardStatDaily` collection and custom analytics endpoints (`POST detail-view`, `POST search-top`, `GET top`) for rolling 7-day Most Viewed and Popular card data. HomePage `mostViewedCardSlugs` field deprecated for public site. |
 | 2026-04-27 | Initial features document created via project-init |
