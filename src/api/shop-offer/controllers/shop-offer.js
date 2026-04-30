@@ -15,7 +15,8 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
    * Response: { data: [{ ...offer, cardPreview: { name, cardImage } | null }] }
    */
   async withCardPreviews(ctx) {
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
 
     // 1. Fetch all active shop offers with merchant/logo populate
     // Use db.query() — documents() and entityService both silently return 0 for localized

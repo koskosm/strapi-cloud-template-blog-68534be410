@@ -16,7 +16,8 @@
 
 module.exports = {
   async getBundle(ctx) {
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
     const strapi = ctx.strapi || globalThis.strapi;
 
     // ── 1. Fetch home-page single type ──────────────────────────────────────

@@ -21,7 +21,8 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
    */
   async bulkByCsv(ctx) {
     const rawSlugs = String(ctx.query.slugs || '').trim();
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
 
     if (!rawSlugs) {
       ctx.body = { data: [] };
