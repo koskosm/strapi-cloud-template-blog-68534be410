@@ -53,6 +53,11 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
       try {
         const where = { publishedAt: { $notNull: true } };
         if (loc) where.locale = loc;
+        // Scalar fields (name, slugsCsv, locale, etc.) are returned automatically by db.query().
+        // Relation/media fields must be listed explicitly in `populate`.
+        // The frontend `useCreditCardSummaries` needDetail check requires:
+        //   name (scalar — auto-returned), cardFaceImage (media — populated below).
+        // Keeping these populated ensures the N+1 per-card fallback never fires.
         const result = await strapi.db.query('api::credit-card.credit-card').findMany({
           where,
           populate: { cardFaceImage: true, keyMetrics: true, staticContents: true },
