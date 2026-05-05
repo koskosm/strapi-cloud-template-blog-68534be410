@@ -48,6 +48,26 @@ export interface CreditCardKeyMetric extends Struct.ComponentSchema {
   };
 }
 
+export interface CreditCardPropertyTag extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_property_tags';
+  info: {
+    description: 'Single short label for the card property tag cloud (text only)';
+    displayName: 'Property tag';
+  };
+  attributes: {
+    text: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface CreditCardStaticContents extends Struct.ComponentSchema {
   collectionName: 'components_credit_card_static_contents';
   info: {
@@ -275,6 +295,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'ads.search-tag': AdsSearchTag;
       'credit-card.key-metric': CreditCardKeyMetric;
+      'credit-card.property-tag': CreditCardPropertyTag;
       'credit-card.static-contents': CreditCardStaticContents;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;

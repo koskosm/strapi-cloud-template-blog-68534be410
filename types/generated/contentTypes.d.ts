@@ -970,6 +970,14 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
           localized: false;
         };
       }>;
+    propertyTags: Schema.Attribute.Component<'credit-card.property-tag', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 32;
+          min: 0;
+        },
+        number
+      >;
     publishedAt: Schema.Attribute.DateTime;
     slugsCsv: Schema.Attribute.Text &
       Schema.Attribute.Required &

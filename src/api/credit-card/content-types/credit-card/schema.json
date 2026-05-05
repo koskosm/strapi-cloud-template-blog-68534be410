@@ -111,6 +111,14 @@
         }
       }
     },
+    "propertyTags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "credit-card.property-tag",
+      "min": 0,
+      "max": 32,
+      "description": "Short text-only tags for card properties (tag cloud)"
+    },
     "keyMetrics": {
       "type": "component",
       "repeatable": true,
