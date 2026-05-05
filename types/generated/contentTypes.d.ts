@@ -684,10 +684,9 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
     content: Schema.Attribute.RichText &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -804,6 +803,93 @@ export interface ApiBlogTagBlogTag extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCardStatDailyCardStatDaily
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'card_stat_dailies';
+  info: {
+    description: 'Daily aggregated view/search-top counts per card slug';
+    displayName: 'Card Stat Daily';
+    pluralName: 'card-stat-dailies';
+    singularName: 'card-stat-daily';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    count: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::card-stat-daily.card-stat-daily'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['detail_view', 'search_top']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCardStatSessionCapCardStatSessionCap
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'card_stat_session_caps';
+  info: {
+    description: 'Per-session daily cap tracking for detail views';
+    displayName: 'Card Stat Session Cap';
+    pluralName: 'card-stat-session-caps';
+    singularName: 'card-stat-session-cap';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    count: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::card-stat-session-cap.card-stat-session-cap'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sessionId: Schema.Attribute.String & Schema.Attribute.Required;
+    slug: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -855,10 +941,9 @@ export interface ApiContactContact extends Struct.SingleTypeSchema {
   attributes: {
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -953,10 +1038,9 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       }>;
     offerDetails: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -983,6 +1067,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'credit-card.static-contents',
       false
     >;
+    tags: Schema.Attribute.Component<'credit-card.tag-pill', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 32;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     topMetrics1Label: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -1385,10 +1482,9 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
       Schema.Attribute.CustomField<'global::credit-card-slugs'>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -1441,10 +1537,9 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
     termsAndConditions: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -1479,10 +1574,9 @@ export interface ApiStaticPageStaticPage extends Struct.CollectionTypeSchema {
     content: Schema.Attribute.RichText &
       Schema.Attribute.Required &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -2053,6 +2147,8 @@ declare module '@strapi/strapi' {
       'api::blog-category.blog-category': ApiBlogCategoryBlogCategory;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::blog-tag.blog-tag': ApiBlogTagBlogTag;
+      'api::card-stat-daily.card-stat-daily': ApiCardStatDailyCardStatDaily;
+      'api::card-stat-session-cap.card-stat-session-cap': ApiCardStatSessionCapCardStatSessionCap;
       'api::category.category': ApiCategoryCategory;
       'api::contact.contact': ApiContactContact;
       'api::credit-card.credit-card': ApiCreditCardCreditCard;

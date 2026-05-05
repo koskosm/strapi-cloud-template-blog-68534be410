@@ -16,7 +16,8 @@
 
 module.exports = {
   async getBundle(ctx) {
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
     const strapi = ctx.strapi || globalThis.strapi;
 
     // ── 1. Fetch home-page single type ──────────────────────────────────────
@@ -83,20 +84,23 @@ module.exports = {
     const allNeededSlugs = [...new Set([...featuredCardSlugs, ...mostViewedCardSlugs])];
 
     // ── 2. Bulk-fetch credit card CMS entries for the needed slugs ──────────
+    // Use db.query() — documents() and entityService both silently return 0 for localized
+    // collection types in this Strapi 5 version; db.query() hits the DB directly.
     let cardCmsEntries = [];
     if (allNeededSlugs.length > 0) {
-      const cardLocaleOrder = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+      const cardLocaleOrder = [locale, 'en', 'zh-HK', undefined].filter(
         (l, i, arr) => arr.indexOf(l) === i,
       );
       for (const loc of cardLocaleOrder) {
         try {
-          const params = {
-            populate: ['cardFaceImage', 'keyMetrics'],
-            pagination: { pageSize: 500, page: 1 },
-            filters: { publishedAt: { $notNull: true } },
-          };
-          if (loc) params.locale = loc;
-          const result = await strapi.entityService.findMany('api::credit-card.credit-card', params);
+          const where = { publishedAt: { $notNull: true } };
+          if (loc) where.locale = loc;
+          const result = await strapi.db.query('api::credit-card.credit-card').findMany({
+            where,
+            populate: { cardFaceImage: true, keyMetrics: true, tags: true },
+            limit: 500,
+            offset: 0,
+          });
           if (Array.isArray(result) && result.length > 0) {
             cardCmsEntries = result;
             break;

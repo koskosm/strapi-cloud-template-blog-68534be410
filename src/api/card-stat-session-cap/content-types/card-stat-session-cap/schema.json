@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "card_stat_session_caps",
+  "info": {
+    "singularName": "card-stat-session-cap",
+    "pluralName": "card-stat-session-caps",
+    "displayName": "Card Stat Session Cap",
+    "description": "Per-session daily cap tracking for detail views"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "date": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "sessionId": {
+      "type": "string",
+      "required": true
+    },
+    "count": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    }
+  },
+  "indexes": [
+    {
+      "name": "card_stat_session_caps_date_slug_session_unique",
+      "columns": ["date", "slug", "session_id"],
+      "type": "unique"
+    }
+  ]
+}

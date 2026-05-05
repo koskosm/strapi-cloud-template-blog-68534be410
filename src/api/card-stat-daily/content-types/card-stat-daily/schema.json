@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "card_stat_dailies",
+  "info": {
+    "singularName": "card-stat-daily",
+    "pluralName": "card-stat-dailies",
+    "displayName": "Card Stat Daily",
+    "description": "Daily aggregated view/search-top counts per card slug"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "date": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["detail_view", "search_top"],
+      "required": true
+    },
+    "count": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    }
+  },
+  "indexes": [
+    {
+      "name": "card_stat_dailies_type_date_slug_unique",
+      "columns": ["type", "date", "slug"],
+      "type": "unique"
+    }
+  ]
+}

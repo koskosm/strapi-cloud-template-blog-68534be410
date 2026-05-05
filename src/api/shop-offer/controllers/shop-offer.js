@@ -15,31 +15,31 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
    * Response: { data: [{ ...offer, cardPreview: { name, cardImage } | null }] }
    */
   async withCardPreviews(ctx) {
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
 
     // 1. Fetch all active shop offers with merchant/logo populate
-    const offerParams = {
-      populate: ['logo', 'merchant', 'merchant.logo', 'eligibleCards'],
-      pagination: { pageSize: 500, page: 1 },
-      filters: { isActive: { $ne: false }, publishedAt: { $notNull: true } },
-    };
-    if (locale) {
-      offerParams.locale = locale;
-    }
-
+    // Use db.query() — documents() and entityService both silently return 0 for localized
+    // collection types in this Strapi 5 version; db.query() hits the DB directly.
+    const localeOrderOffers = [locale, 'en', undefined].filter((l, i, arr) => arr.indexOf(l) === i);
     let offers = [];
-    try {
-      offers = await strapi.entityService.findMany('api::shop-offer.shop-offer', offerParams);
-    } catch (_err) {
-      // Locale may not exist — fall back to default
+    for (const loc of localeOrderOffers) {
       try {
-        const fallbackParams = { ...offerParams };
-        delete fallbackParams.locale;
-        offers = await strapi.entityService.findMany('api::shop-offer.shop-offer', fallbackParams);
-      } catch (fallbackErr) {
-        strapi.log.warn('[shop-offer] withCardPreviews: failed to fetch offers', fallbackErr);
-        ctx.body = { data: [] };
-        return;
+        const where = { publishedAt: { $notNull: true }, isActive: { $ne: false } };
+        if (loc) where.locale = loc;
+        const result = await strapi.db.query('api::shop-offer.shop-offer').findMany({
+          where,
+          populate: { logo: true, merchant: { populate: { logo: true } }, eligibleCards: true, categories: true },
+          orderBy: { publishedAt: 'desc' },
+          limit: 500,
+          offset: 0,
+        });
+        if (Array.isArray(result) && result.length > 0) {
+          offers = result;
+          break;
+        }
+      } catch (_err) {
+        // Try next locale
       }
     }
 
@@ -58,20 +58,21 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
     // 3. Fetch all credit card CMS entries and build a slug → preview map
     const cardPreviewMap = new Map();
     if (offerSlugsSet.size > 0) {
-      const localeOrder = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+      const localeOrder = [locale, 'en', 'zh-HK', undefined].filter(
         (l, i, arr) => arr.indexOf(l) === i,
       );
 
       let cardEntries = [];
       for (const loc of localeOrder) {
         try {
-          const cardParams = {
-            populate: ['cardFaceImage'],
-            pagination: { pageSize: 500, page: 1 },
-            filters: { publishedAt: { $notNull: true } },
-          };
-          if (loc) cardParams.locale = loc;
-          const result = await strapi.entityService.findMany('api::credit-card.credit-card', cardParams);
+          const where = { publishedAt: { $notNull: true } };
+          if (loc) where.locale = loc;
+          const result = await strapi.db.query('api::credit-card.credit-card').findMany({
+            where,
+            populate: { cardFaceImage: true },
+            limit: 500,
+            offset: 0,
+          });
           if (Array.isArray(result) && result.length > 0) {
             cardEntries = result;
             break;

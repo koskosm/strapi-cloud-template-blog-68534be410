@@ -21,7 +21,8 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
    */
   async bulkByCsv(ctx) {
     const rawSlugs = String(ctx.query.slugs || '').trim();
-    const locale = String(ctx.query.locale || 'en').trim();
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
 
     if (!rawSlugs) {
       ctx.body = { data: [] };
@@ -41,22 +42,28 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
     // Fetch all published credit card entries for the requested locale.
     // We filter server-side because slugsCsv is a plain text field (not a relation),
     // so Strapi's built-in $in filter cannot be used.
-    const localeToTry = [locale, 'en', 'zh', 'zh-HK', undefined].filter(
+    // Use db.query() — documents() and entityService both silently return 0 for localized
+    // collection types in this Strapi 5 version; db.query() hits the DB directly.
+    const localeToTry = [locale, 'en', 'zh-HK', undefined].filter(
       (l, i, arr) => arr.indexOf(l) === i,
     );
 
     let entries = [];
     for (const loc of localeToTry) {
       try {
-        const params = {
-          populate: '*',
-          pagination: { pageSize: 500, page: 1 },
-          filters: { publishedAt: { $notNull: true } },
-        };
-        if (loc) {
-          params.locale = loc;
-        }
-        const result = await strapi.entityService.findMany('api::credit-card.credit-card', params);
+        const where = { publishedAt: { $notNull: true } };
+        if (loc) where.locale = loc;
+        // Scalar fields (name, slugsCsv, locale, etc.) are returned automatically by db.query().
+        // Relation/media fields must be listed explicitly in `populate`.
+        // The frontend `useCreditCardSummaries` needDetail check requires:
+        //   name (scalar — auto-returned), cardFaceImage (media — populated below).
+        // Keeping these populated ensures the N+1 per-card fallback never fires.
+        const result = await strapi.db.query('api::credit-card.credit-card').findMany({
+          where,
+          populate: { cardFaceImage: true, keyMetrics: true, staticContents: true, tags: true },
+          limit: 500,
+          offset: 0,
+        });
         if (Array.isArray(result) && result.length > 0) {
           entries = result;
           break;

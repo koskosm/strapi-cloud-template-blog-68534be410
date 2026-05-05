@@ -48,6 +48,23 @@ export interface CreditCardKeyMetric extends Struct.ComponentSchema {
   };
 }
 
+export interface CreditCardTagPill extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_tag_pills';
+  info: {
+    description: 'One pill label for the card tag cloud (order = display order)';
+    displayName: 'Tag pill';
+  };
+  attributes: {
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface CreditCardStaticContents extends Struct.ComponentSchema {
   collectionName: 'components_credit_card_static_contents';
   info: {
@@ -57,10 +74,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
   attributes: {
     annualFee: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -70,10 +86,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     annualInterestRateAndFees: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -83,10 +98,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     aumAndSegmentRequirement: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -96,10 +110,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     benefitsDetails: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -109,10 +122,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     cardAssociation: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -122,10 +134,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     issuerBank: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -135,10 +146,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     minimumIncomeRequirements: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -148,10 +158,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     mobilePayment: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -161,10 +170,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     studentEligibility: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -174,10 +182,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     supplementaryCard: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -187,10 +194,9 @@ export interface CreditCardStaticContents extends Struct.ComponentSchema {
       }>;
     welcomeOfferConditions: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       > &
       Schema.Attribute.SetPluginOptions<{
@@ -234,10 +240,9 @@ export interface SharedRichText extends Struct.ComponentSchema {
   attributes: {
     body: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
-        'plugin::ckeditor.CKEditor',
+        'plugin::ckeditor5.CKEditor',
         {
-          output: 'HTML';
-          preset: 'standard';
+          preset: 'defaultHtml';
         }
       >;
   };
@@ -276,6 +281,7 @@ declare module '@strapi/strapi' {
       'ads.search-tag': AdsSearchTag;
       'credit-card.key-metric': CreditCardKeyMetric;
       'credit-card.static-contents': CreditCardStaticContents;
+      'credit-card.tag-pill': CreditCardTagPill;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
