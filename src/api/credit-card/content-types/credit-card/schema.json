@@ -117,13 +117,23 @@
       "component": "credit-card.key-metric",
       "min": 0,
       "max": 12,
-      "description": "key metrics: icon, main text, and label each"
+      "description": "key metrics: icon, main text, and label each",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "staticContents": {
       "type": "component",
       "repeatable": false,
       "component": "credit-card.static-contents",
-      "description": "Static content section: benefits, fees, eligibility, issuer, and payment details"
+      "description": "Static content section: benefits, fees, eligibility, issuer, and payment details",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "offerDetails": {
       "type": "customField",

@@ -1,5 +1,7 @@
 'use strict';
 
+const { errors } = require('@strapi/utils');
+
 module.exports = {
   async beforeCreate(event) {
     await normalizeAndValidateSlugs(event);
@@ -20,12 +22,12 @@ async function normalizeAndValidateSlugs(event) {
   const normalized = service.normalizeSlugsCsv(data.slugsCsv);
 
   if (!normalized) {
-    throw new Error('Please enter at least one credit card slug.');
+    throw new errors.ApplicationError('Please enter at least one credit card slug.');
   }
 
   const invalidSlugs = await service.getInvalidSlugs(normalized);
   if (invalidSlugs.length > 0) {
-    throw new Error(`Invalid credit card slug(s): ${invalidSlugs.join(', ')}`);
+    throw new errors.ApplicationError(`Invalid credit card slug(s): ${invalidSlugs.join(', ')}`);
   }
 
   data.slugsCsv = normalized;
