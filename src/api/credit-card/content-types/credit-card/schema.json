@@ -45,6 +45,19 @@
         }
       }
     },
+    "tags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "credit-card.tag-pill",
+      "min": 0,
+      "max": 32,
+      "description": "Tag cloud: short labels shown as pills (e.g. Cashback, Lounge)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "cardFaceImage": {
       "type": "media",
       "multiple": false,

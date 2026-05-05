@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_credit_card_tag_pills",
+  "info": {
+    "displayName": "Tag pill",
+    "description": "One pill label for the card tag cloud (order = display order)"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

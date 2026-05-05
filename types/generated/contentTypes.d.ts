@@ -1067,6 +1067,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'credit-card.static-contents',
       false
     >;
+    tags: Schema.Attribute.Component<'credit-card.tag-pill', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 32;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     topMetrics1Label: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

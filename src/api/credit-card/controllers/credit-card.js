@@ -60,7 +60,7 @@ module.exports = createCoreController('api::credit-card.credit-card', ({ strapi 
         // Keeping these populated ensures the N+1 per-card fallback never fires.
         const result = await strapi.db.query('api::credit-card.credit-card').findMany({
           where,
-          populate: { cardFaceImage: true, keyMetrics: true, staticContents: true },
+          populate: { cardFaceImage: true, keyMetrics: true, staticContents: true, tags: true },
           limit: 500,
           offset: 0,
         });

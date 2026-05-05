@@ -48,6 +48,23 @@ export interface CreditCardKeyMetric extends Struct.ComponentSchema {
   };
 }
 
+export interface CreditCardTagPill extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_tag_pills';
+  info: {
+    description: 'One pill label for the card tag cloud (order = display order)';
+    displayName: 'Tag pill';
+  };
+  attributes: {
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface CreditCardStaticContents extends Struct.ComponentSchema {
   collectionName: 'components_credit_card_static_contents';
   info: {
@@ -264,6 +281,7 @@ declare module '@strapi/strapi' {
       'ads.search-tag': AdsSearchTag;
       'credit-card.key-metric': CreditCardKeyMetric;
       'credit-card.static-contents': CreditCardStaticContents;
+      'credit-card.tag-pill': CreditCardTagPill;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
