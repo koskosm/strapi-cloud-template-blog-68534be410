@@ -97,7 +97,7 @@ module.exports = {
           if (loc) where.locale = loc;
           const result = await strapi.db.query('api::credit-card.credit-card').findMany({
             where,
-            populate: { cardFaceImage: true, keyMetrics: true, tags: true },
+            populate: { cardFaceImage: true, keyMetrics: true, tags: true, informationalTags: true },
             limit: 500,
             offset: 0,
           });

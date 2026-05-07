@@ -65,6 +65,23 @@ export interface CreditCardTagPill extends Struct.ComponentSchema {
   };
 }
 
+export interface CreditCardInformationalTag extends Struct.ComponentSchema {
+  collectionName: 'components_credit_card_informational_tags';
+  info: {
+    description: 'Short informational line (e.g. disclaimer, eligibility note); order = display order';
+    displayName: 'Informational tag';
+  };
+  attributes: {
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+  };
+}
+
 export interface CreditCardStaticContents extends Struct.ComponentSchema {
   collectionName: 'components_credit_card_static_contents';
   info: {
@@ -282,6 +299,7 @@ declare module '@strapi/strapi' {
       'credit-card.key-metric': CreditCardKeyMetric;
       'credit-card.static-contents': CreditCardStaticContents;
       'credit-card.tag-pill': CreditCardTagPill;
+      'credit-card.informational-tag': CreditCardInformationalTag;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

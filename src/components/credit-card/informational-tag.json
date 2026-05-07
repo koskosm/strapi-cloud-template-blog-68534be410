@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_credit_card_informational_tags",
+  "info": {
+    "displayName": "Informational tag",
+    "description": "Short informational line (e.g. disclaimer, eligibility note); order = display order"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

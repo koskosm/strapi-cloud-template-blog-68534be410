@@ -58,6 +58,19 @@
         }
       }
     },
+    "informationalTags": {
+      "type": "component",
+      "repeatable": true,
+      "component": "credit-card.informational-tag",
+      "min": 0,
+      "max": 24,
+      "description": "Informational tags: short lines (e.g. disclaimers, badges, footnotes)",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "cardFaceImage": {
       "type": "media",
       "multiple": false,

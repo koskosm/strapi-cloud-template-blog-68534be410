@@ -1016,6 +1016,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    informationalTags: Schema.Attribute.Component<'credit-card.informational-tag', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     keyMetrics: Schema.Attribute.Component<'credit-card.key-metric', true> &
       Schema.Attribute.SetMinMax<
         {
