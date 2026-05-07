@@ -1520,6 +1520,7 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
       }>;
     endDate: Schema.Attribute.Date & Schema.Attribute.Required;
     isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    isRecommended: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
