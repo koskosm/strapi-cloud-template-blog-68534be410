@@ -83,60 +83,6 @@
         }
       }
     },
-    "topMetrics1Label": {
-      "type": "string",
-      "description": "Top metrics slot 1 — label",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "topMetrics1Value": {
-      "type": "string",
-      "description": "Top metrics slot 1 — value",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "topMetrics2Label": {
-      "type": "string",
-      "description": "Top metrics slot 2 — label",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "topMetrics2Value": {
-      "type": "string",
-      "description": "Top metrics slot 2 — value",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "topMetrics3Label": {
-      "type": "string",
-      "description": "Top metrics slot 3 — label",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "topMetrics3Value": {
-      "type": "string",
-      "description": "Top metrics slot 3 — value",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "keyMetrics": {
       "type": "component",
       "repeatable": true,
