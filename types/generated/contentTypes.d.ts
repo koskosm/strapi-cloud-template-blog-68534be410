@@ -1057,6 +1057,18 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    additionalNote: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     offerDetails: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',

@@ -119,6 +119,19 @@
         }
       }
     },
+    "additionalNote": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "description": "Additional note",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
     "offerUrl": {
       "type": "string",
       "description": "Link to the welcome offer",
