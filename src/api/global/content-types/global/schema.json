@@ -71,6 +71,22 @@
         }
       }
     },
+    "threadsUrl": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "rednoteUrl": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "creditCardScoresInfo": {
       "type": "text",
       "description": "Credit Card Scores Info",

@@ -1187,6 +1187,18 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
         };
       }>;
     locale: Schema.Attribute.String;
+    rednoteUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    threadsUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::global.global'>;
     publishedAt: Schema.Attribute.DateTime;
     rebateScoresInfo: Schema.Attribute.Text &
