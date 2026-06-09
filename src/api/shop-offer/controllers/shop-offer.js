@@ -8,6 +8,80 @@ const SUGGESTION_LOCALES = ['zh-HK', 'en'];
 /** Generous bound so a single query returns the full active set (catalog ~1,087 today). */
 const SUGGESTION_QUERY_LIMIT = 2000;
 
+/** Default page size for the card-scoped offers endpoint when `page_size` is omitted (PPD-171). */
+const CARD_OFFERS_DEFAULT_PAGE_SIZE = 24;
+
+/** Parse a `creditCardSlug` CSV into trimmed, lowercased, non-empty slug segments. */
+function parseSlugSegments(csv) {
+  return String(csv || '')
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+/**
+ * Card-scoped, group-ordered, paginated page builder (PPD-171, pure).
+ *
+ * Mirrors the frontend `shopOfferMatchesCardSlug` / `isOfferExclusiveToCard` / `orderOffersForCard`
+ * rules so client and server classification stay identical:
+ *  - EXACT slug-segment match: split `creditCardSlug` on `,`, trim + lowercase, compare equality —
+ *    rejects partial-slug false matches (`mox-credit-x` must NOT match `mox-credit`).
+ *  - Classify into recommended (`isRecommended === true`) → exclusive (CSV has exactly ONE segment
+ *    equal to the slug) → non-exclusive (multi-card linked to this card). A recommended+exclusive
+ *    offer lands in the recommended group.
+ *  - Sort each group by `publishedAt ?? createdAt` DESC; tie-break `id` ascending (string compare),
+ *    so ordering is stable across page boundaries.
+ *  - Concatenate groups → full ordered set, then slice the requested page.
+ *
+ * @param {Array<{id?: unknown, creditCardSlug?: string, isRecommended?: boolean, publishedAt?: string, createdAt?: string}>} rows
+ * @param {{slug: string, page: number, pageSize: number}} opts
+ * @returns {{ data: Array<object>, meta: { pagination: { page: number, pageSize: number, total: number, pageCount: number } } }}
+ */
+function buildCardScopedOffersPage(rows, { slug, page, pageSize }) {
+  const key = String(slug || '').trim().toLowerCase();
+  const safePageSize = Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : CARD_OFFERS_DEFAULT_PAGE_SIZE;
+  const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+
+  const matching = (Array.isArray(rows) ? rows : []).filter((row) => {
+    if (!key) return false;
+    return parseSlugSegments(row?.creditCardSlug).includes(key);
+  });
+
+  const recommended = [];
+  const exclusive = [];
+  const nonExclusive = [];
+  for (const row of matching) {
+    const segments = parseSlugSegments(row?.creditCardSlug);
+    if (row?.isRecommended === true) recommended.push(row);
+    else if (segments.length === 1 && segments[0] === key) exclusive.push(row);
+    else nonExclusive.push(row);
+  }
+
+  const dateMs = (row) => {
+    const raw = String(row?.publishedAt || '').trim() || String(row?.createdAt || '').trim();
+    if (!raw) return 0;
+    const t = Date.parse(raw);
+    return Number.isNaN(t) ? 0 : t;
+  };
+  const sortGroup = (group) =>
+    [...group].sort((a, b) => {
+      const diff = dateMs(b) - dateMs(a);
+      if (diff !== 0) return diff;
+      return String(a?.id).localeCompare(String(b?.id));
+    });
+
+  const ordered = [...sortGroup(recommended), ...sortGroup(exclusive), ...sortGroup(nonExclusive)];
+  const total = ordered.length;
+  const pageCount = Math.max(1, Math.ceil(total / safePageSize));
+  const start = (safePage - 1) * safePageSize;
+  const data = ordered.slice(start, start + safePageSize);
+
+  return {
+    data,
+    meta: { pagination: { page: safePage, pageSize: safePageSize, total, pageCount } },
+  };
+}
+
 /**
  * Pure cross-locale aggregation for the suggestions endpoint.
  *
@@ -220,7 +294,82 @@ module.exports = createCoreController('api::shop-offer.shop-offer', ({ strapi })
 
     ctx.body = { data: buildSuggestionsFromLocaleRows(rows, locale) };
   },
+
+  /**
+   * GET /api/shop-offers/for-card?slug=<card>&page=1&page_size=6&locale=zh-HK
+   *
+   * Card-scoped, group-ordered, paginated offers (PPD-171). Returns the offers linked to ONE
+   * credit-card slug, grouped (recommended → exclusive → non-exclusive) and ordered
+   * (`publishedAt ?? createdAt` desc, tie-break `id` asc) across the WHOLE matching set, THEN
+   * paginated — so a card's exclusive/recommended offer can never be truncated out of page 1
+   * even when the card has 100+ offers.
+   *
+   * Mirrors `withCardPreviews`' cross-locale `strapi.db.query` fetch (Strapi 5 REST `locale`
+   * returns 0 rows for localized collection types): iterate `[locale, 'en', undefined]`, break on
+   * the first non-empty pass (full offer rows for that locale — NOT a per-offer union like
+   * `suggestions`). The CSV exact-segment match + classification live in the pure
+   * `buildCardScopedOffersPage` helper so partial-slug false matches stay testable.
+   *
+   * Response: { data: [...offers], meta: { pagination: { page, pageSize, total, pageCount } } }
+   */
+  async forCard(ctx) {
+    const rawLocale = String(ctx.query.locale || 'en').trim();
+    const locale = rawLocale === 'zh' ? 'zh-HK' : rawLocale;
+    const slug = String(ctx.query.slug || '').trim();
+    const page = Number.parseInt(String(ctx.query.page ?? ''), 10) || 1;
+    const pageSizeRaw = Number.parseInt(String(ctx.query.page_size ?? ''), 10);
+    const pageSize = Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? pageSizeRaw : CARD_OFFERS_DEFAULT_PAGE_SIZE;
+
+    if (!slug) {
+      ctx.body = { data: [], meta: { pagination: { page, pageSize, total: 0, pageCount: 1 } } };
+      return;
+    }
+
+    // Fetch the full active+published candidate set across locales, mirroring withCardPreviews:
+    // break on the first non-empty locale pass (one locale's full rows).
+    //
+    // Exclude EXPIRED offers server-side, BEFORE pagination, so both the returned page and
+    // `pagination.total` count only genuinely-active offers (PPD-171 QA). Active = no endDate OR
+    // `endDate >= today` — `today` is the server LOCAL calendar date (YYYY-MM-DD), so an offer
+    // ending exactly today is still active. This matches the browse path's `appendActiveFilter`
+    // (offers-server-query.ts) and the client `isShopOfferExpired` (`endDate < today` → expired).
+    const today = (() => {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    })();
+    const localeOrder = [locale, 'en', undefined].filter((l, i, arr) => arr.indexOf(l) === i);
+    let rows = [];
+    for (const loc of localeOrder) {
+      try {
+        const where = {
+          publishedAt: { $notNull: true },
+          isActive: { $ne: false },
+          $or: [{ endDate: { $null: true } }, { endDate: { $gte: today } }],
+        };
+        if (loc) where.locale = loc;
+        const result = await strapi.db.query('api::shop-offer.shop-offer').findMany({
+          where,
+          populate: { logo: true, merchant: { populate: { logo: true } }, categories: true },
+          orderBy: { publishedAt: 'desc' },
+          limit: SUGGESTION_QUERY_LIMIT,
+          offset: 0,
+        });
+        if (Array.isArray(result) && result.length > 0) {
+          rows = result;
+          break;
+        }
+      } catch (_err) {
+        // Try the next locale pass.
+      }
+    }
+
+    ctx.body = buildCardScopedOffersPage(rows, { slug, page, pageSize });
+  },
 }));
 
 // Exported for behaviour-level verification (CMS has no JS test runner).
 module.exports.buildSuggestionsFromLocaleRows = buildSuggestionsFromLocaleRows;
+module.exports.buildCardScopedOffersPage = buildCardScopedOffersPage;

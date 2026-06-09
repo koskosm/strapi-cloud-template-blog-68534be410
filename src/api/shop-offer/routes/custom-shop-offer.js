@@ -18,5 +18,13 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: 'GET',
+      path: '/shop-offers/for-card',
+      handler: 'shop-offer.forCard',
+      config: {
+        auth: false,
+      },
+    },
   ],
 };
