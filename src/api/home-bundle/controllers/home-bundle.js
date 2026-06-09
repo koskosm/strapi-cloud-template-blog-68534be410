@@ -7,9 +7,8 @@
  *
  * Returns everything the homepage needs in one response:
  *   - heroCarousels
- *   - homePage config (titles, seo, featured/mostViewed slugs)
- *   - featuredCards  — CMS data resolved from featuredCardSlugs
- *   - mostViewedCards — CMS data resolved from mostViewedCardSlugs
+ *   - homePage config (titles, seo, featured slugs)
+ *   - featuredCards — CMS data resolved from featuredCardSlugs
  *
  * Eliminates the homepage waterfall: home-page config → extract slugs → N card CMS calls.
  */
@@ -69,7 +68,7 @@ module.exports = {
       }
     }
 
-    // Extract slugs from home-page data (featuredCardSlugs / mostViewedCardSlugs are localized:false)
+    // Extract slugs from home-page data (featuredCardSlugs is localized:false)
     const parseSlugsCsv = (val) => {
       if (!val) return [];
       if (Array.isArray(val)) return val.map(String).map((s) => s.trim()).filter(Boolean);
@@ -80,8 +79,7 @@ module.exports = {
     };
 
     const featuredCardSlugs = parseSlugsCsv(homePageData?.featuredCardSlugs);
-    const mostViewedCardSlugs = parseSlugsCsv(homePageData?.mostViewedCardSlugs);
-    const allNeededSlugs = [...new Set([...featuredCardSlugs, ...mostViewedCardSlugs])];
+    const allNeededSlugs = [...new Set(featuredCardSlugs)];
 
     // ── 2. Bulk-fetch credit card CMS entries for the needed slugs ──────────
     // Use db.query() — documents() and entityService both silently return 0 for localized
@@ -144,16 +142,13 @@ module.exports = {
         .filter(Boolean);
 
     const featuredCards = resolveCardList(featuredCardSlugs);
-    const mostViewedCards = resolveCardList(mostViewedCardSlugs);
 
     // ── 3. Assemble response ────────────────────────────────────────────────
     ctx.body = {
       data: {
         homePage: homePageData,
         featuredCardSlugs,
-        mostViewedCardSlugs,
         featuredCards,
-        mostViewedCards,
       },
     };
   },

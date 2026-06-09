@@ -1389,13 +1389,6 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
       'oneToMany',
       'api::home-page.home-page'
     >;
-    mostViewedCardSlugs: Schema.Attribute.Text &
-      Schema.Attribute.CustomField<'global::credit-card-slugs'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     mostViewedTitle: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
