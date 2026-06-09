@@ -10,5 +10,13 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: 'GET',
+      path: '/shop-offers/suggestions',
+      handler: 'shop-offer.suggestions',
+      config: {
+        auth: false,
+      },
+    },
   ],
 };
