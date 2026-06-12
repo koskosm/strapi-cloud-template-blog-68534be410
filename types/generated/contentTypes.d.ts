@@ -1575,7 +1575,6 @@ export interface ApiShopOfferShopOffer extends Struct.CollectionTypeSchema {
         };
       }>;
     discount: Schema.Attribute.String &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
