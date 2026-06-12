@@ -34,7 +34,24 @@ ShopOffer is the primary promotion collection. Merchant is a lookup collection l
 ```
 GET /api/shop-offers?populate=*&locale=zh-HK&filters[isActive][$eq]=true
 GET /api/shop-offers/:documentId?populate=*&locale=zh-HK
+GET /api/shop-offers/with-card-previews?locale=zh-HK
+GET /api/shop-offers/suggestions?locale=zh-HK
 ```
+
+#### `GET /api/shop-offers/with-card-previews?locale=zh-HK`
+Custom endpoint (`controllers/shop-offer.js#withCardPreviews`, `auth: false`). Returns all active
+shop offers, each enriched with a `cardPreview` (`{ name, cardImage }`) for the linked card slug,
+eliminating the per-offer N+1. Uses `strapi.db.query()` because the Strapi 5 REST `locale` param
+silently returns 0 for localized collection types.
+
+#### `GET /api/shop-offers/suggestions?locale=zh-HK` (PPD-172)
+Lightweight autocomplete feed (`auth: false`). Returns **only** `{ slug, name, allLocaleNames }` per
+**active** offer — no logos, merchant, descriptions, T&C, or card previews. `name` is the display
+name in the requested locale (with fallback to another locale's name if missing); `allLocaleNames`
+is the de-duplicated union of that offer's titles across all locales, for cross-locale autocomplete
+matching. The cross-locale union is computed **server-side in a single query path** (via
+`strapi.db.query()`), so the client never pages the catalog per-locale. `?locale=zh` resolves to
+`zh-HK`. Replaces the frontend's full-catalog multi-locale sweep behind search suggestions.
 
 ---
 
@@ -68,3 +85,4 @@ GET /api/merchants/:documentId?populate=*&locale=zh-HK
 | Date | Change | Issue |
 |------|--------|-------|
 | 2026-04 | Initial content types created | — |
+| 2026-06-09 | Added `GET /api/shop-offers/suggestions` — lightweight cross-locale autocomplete feed (`{ slug, name, allLocaleNames }`, active offers only, single server-side query); documented existing `with-card-previews` endpoint | PPD-172 |
