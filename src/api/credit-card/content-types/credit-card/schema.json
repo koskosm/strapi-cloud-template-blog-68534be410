@@ -140,6 +140,15 @@
           "localized": false
         }
       }
+    },
+    "applyLinkUrl": {
+      "type": "string",
+      "description": "Apply link URL",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }

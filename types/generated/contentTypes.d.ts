@@ -1081,6 +1081,12 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    applyLinkUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     offerUrl: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
